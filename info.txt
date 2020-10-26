@@ -1,0 +1,30 @@
+pg_ctl -D /usr/local/var/postgres start
+
+CREATE TABLE students (
+	first_name VARCHAR ( 25 ) NOT NULL,
+	last_name VARCHAR ( 25 ) NOT NULL,
+	id INT UNIQUE NOT NULL
+);
+
+pg_dump dbname > outfile
+
+psql -C dbname < infile 
+
+
+
+mkdir -p /var/run/postgresql/9.6-main.pg_stat_tmp
+chown postgres.postgres /var/run/postgresql/9.6-main.pg_stat_tmp -R
+su postgres
+nohup /usr/lib/postgresql/9.6/bin/postgres -D /var/lib/postgresql/9.6/main -c config_file=/etc/postgresql/9.6/main/postgresql.conf > /dev/null 2>&1 &
+echo "waiting for the database to start..."
+sleep 5
+cd /usr/local/educative/sna-psql-demo && tmux \
+new-session  "npm start; read" \; \
+split-window "cd /usr/local/educative/sna-psql-demo/client  && npm start; read" \; \
+select-layout even-horizontal
+
+
+tmux \
+new-session  "npm start; read" \; \
+split-window "cd client  && npm start; read" \; \
+select-layout even-horizontal
