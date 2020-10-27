@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import "./App.css";
 
@@ -36,53 +36,50 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Typography component="h1" variant="h4">
-          Students
-        </Typography>
-
-        <StudentList ref="studentList" />
-
-        <form onSubmit={this.clickAddStudent}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="new_first_name"
-            label="First Name"
-            name="new_first_name"
-            autoComplete="first_name"
-            autoFocus
-            onChange={this.handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="new_last_name"
-            label="Last Name"
-            name="new_last_name"
-            autoComplete="last_name"
-            onChange={this.handleChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="new_id"
-            label="ID"
-            name="new_id"
-            autoComplete="id"
-            onChange={this.handleChange}
-          />
-          <Button type="submit" fullWidth variant="contained" color="primary">
-            Add
-          </Button>
-        </form>
-      </div>
+      <React.Fragment>
+        <div className="App">
+          <StudentList ref="studentList" />
+          <form onSubmit={this.clickAddStudent}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="new_first_name"
+              label="First Name"
+              name="new_first_name"
+              autoComplete="first_name"
+              autoFocus
+              onChange={this.handleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="new_last_name"
+              label="Last Name"
+              name="new_last_name"
+              autoComplete="last_name"
+              onChange={this.handleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="new_id"
+              label="ID"
+              name="new_id"
+              autoComplete="id"
+              onChange={this.handleChange}
+            />
+            <Button type="submit" fullWidth variant="contained" color="primary">
+              Add
+            </Button>
+          </form>
+        </div>
+      </React.Fragment>
     );
   }
 }
