@@ -1,6 +1,15 @@
 const express = require("express");
 const Student = require("../models/student");
 const router = express.Router();
+var pg = require("pg");
+
+const client = new pg.Client({
+  user: "docker",
+  database: "postgres",
+  password: "docker",
+  port: 5432,
+});
+client.connect();
 
 router.get("/", async (req, res) => {
   try {
@@ -44,10 +53,34 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 router.post("/update/:id", (req, res) => {
-  const { done } = req.body;
-  Student.findByIdAndUpdate(req.params.id, { done })
-    .then((student) => res.json(student))
-    .catch((err) => res.json(500, err));
+  console.log(
+    "UPDATE students SET first_name= '" +
+      req.body.first_name +
+      "', last_name='" +
+      req.body.last_name +
+      "', id='" +
+      req.body.id +
+      "' WHERE id='" +
+      req.params.id +
+      "';"
+  );
+  client.query(
+    "UPDATE students SET first_name= '" +
+      req.body.first_name +
+      "', last_name='" +
+      req.body.last_name +
+      "', id='" +
+      req.body.id +
+      "' WHERE id='" +
+      req.params.id +
+      "';",
+    (err, result) => {
+      console.log("Updated");
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
 });
 
 module.exports = router;
