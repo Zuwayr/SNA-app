@@ -53,27 +53,9 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 router.post("/update/:id", (req, res) => {
-  console.log(
-    "UPDATE students SET first_name= '" +
-      req.body.first_name +
-      "', last_name='" +
-      req.body.last_name +
-      "', id='" +
-      req.body.id +
-      "' WHERE id='" +
-      req.params.id +
-      "';"
-  );
   client.query(
-    "UPDATE students SET first_name= '" +
-      req.body.first_name +
-      "', last_name='" +
-      req.body.last_name +
-      "', id='" +
-      req.body.id +
-      "' WHERE id='" +
-      req.params.id +
-      "';",
+    "UPDATE students SET first_name= $1::text , last_name=$2::text, id=$3::int WHERE id=$4::int",
+    [req.body.first_name, req.body.last_name, req.body.id, req.params.id],
     (err, result) => {
       console.log("Updated");
       if (err) {
